@@ -1,0 +1,4 @@
+interface:
+  display_name: "Alluxio 运维排障"
+  short_description: "基于证据定位 Alluxio 集群故障并生成 Support 报告"
+  default_prompt: "Use $alluxio-ops-triage to diagnose this Alluxio incident from live cluster evidence or a diagnostic snapshot."
