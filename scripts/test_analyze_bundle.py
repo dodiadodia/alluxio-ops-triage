@@ -30,7 +30,10 @@ class AnalyzeBundleTest(unittest.TestCase):
             encoding="utf-8",
         )
         (bundle / "metrics" / "metrics.prom").write_text(
-            "alluxio_cached_storage 100\nalluxio_cached_capacity 200\n",
+            "alluxio_cached_storage 100\n"
+            "alluxio_cached_capacity 200\n"
+            "etcd_mvcc_db_total_size_in_use_in_bytes 1048576\n"
+            "etcd_server_has_leader 1\n",
             encoding="utf-8",
         )
         return bundle
@@ -49,6 +52,11 @@ class AnalyzeBundleTest(unittest.TestCase):
             self.assertIn("memory_termination", signal_ids)
             self.assertIn("fuse_disconnected", signal_ids)
             self.assertIn("alluxio_cached_storage", summary.relevant_metrics_present)
+            self.assertIn(
+                "etcd_mvcc_db_total_size_in_use_in_bytes",
+                summary.relevant_metrics_present,
+            )
+            self.assertIn("etcd_server_has_leader", summary.relevant_metrics_present)
             rendered = analyze_bundle.render_markdown(summary)
             self.assertIn("<REDACTED>", rendered)
             self.assertNotIn("should-not-leak", rendered)

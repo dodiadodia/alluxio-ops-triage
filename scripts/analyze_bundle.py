@@ -271,6 +271,16 @@ RELEVANT_METRICS = [
     "alluxio_scheduler_job_failures",
     "alluxio_license_expiration_date",
     "alluxio_version_info",
+    "etcd_server_has_leader",
+    "etcd_server_leader_changes_seen_total",
+    "etcd_server_proposals_pending",
+    "etcd_server_proposals_failed_total",
+    "etcd_disk_wal_fsync_duration_seconds",
+    "etcd_disk_backend_commit_duration_seconds",
+    "etcd_mvcc_db_total_size_in_use_in_bytes",
+    "etcd_mvcc_db_total_size_in_bytes",
+    "etcd_server_quota_backend_bytes",
+    "etcd_server_alarm_common",
 ]
 
 

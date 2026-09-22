@@ -209,6 +209,8 @@ More parallelism can worsen UFS throttling, Worker memory, page-store contention
 
 ## Etcd unavailable, alarmed, or out of space
 
+Read [etcd-operations.md](etcd-operations.md) for the full decision tree, Kubernetes and bare-metal evidence commands, `NOSPACE` recovery gate, capacity model, and post-change validation.
+
 Evidence:
 
 - replica count, placement, readiness, restarts, PVCs and disk;
@@ -219,7 +221,9 @@ Evidence:
 
 For a three-member cluster, quorum requires two healthy members. Do not generalize that every pod marked Running is a healthy member.
 
-Recovery order must be release- and topology-specific. Never delete PVCs or host data as an initial fix. Before compact/defrag, restore, member replacement, or rebuild, require a verified backup, endpoint health assessment, one-member-at-a-time plan where applicable, configuration inventory, rollback, and explicit approval.
+Do not infer corruption from a pod remaining Non-Ready. First distinguish quorum loss, network/TLS failure, slow or full disk, `NOSPACE`, process crash, version/configuration mismatch, and confirmed checksum/corruption evidence.
+
+Recovery order must be release- and topology-specific. Never delete PVCs or host data as an initial fix. Before compact/defrag, restore, member replacement, or rebuild, require a verified snapshot or tested backup, endpoint health assessment, one-member-at-a-time plan where applicable, configuration inventory, rollback, and explicit approval.
 
 ## Write cache, FoundationDB, or missing persisted writes
 

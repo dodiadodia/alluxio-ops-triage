@@ -35,6 +35,8 @@ Search the scraped names first because Prometheus clients may expose suffixes su
 
 These names are a navigation aid, not a promise that every version exposes every family.
 
+For etcd incidents, discover the metrics exposed by the deployed version before querying. Useful v3.5-era signals include `etcd_server_has_leader`, `etcd_server_leader_changes_seen_total`, `etcd_server_proposals_pending`, `etcd_server_proposals_failed_total`, `etcd_disk_wal_fsync_duration_seconds`, `etcd_disk_backend_commit_duration_seconds`, `etcd_mvcc_db_total_size_in_use_in_bytes`, and `etcd_mvcc_db_total_size_in_bytes`. A dashboard-specific `etcd_server_alarm_common` may exist, but `etcdctl alarm list` is the direct alarm check. Read [etcd-operations.md](etcd-operations.md) before interpreting backend size or proposing maintenance.
+
 ## Query safely
 
 First discover actual names:

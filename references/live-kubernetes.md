@@ -136,6 +136,8 @@ Do not run ufsTest, ufsIOTest, worker-benchmark, FUSE read/write tests, or a loa
 
 ## 7. Etcd and write-cache dependencies
 
+For an etcd-specific incident, also read [etcd-operations.md](etcd-operations.md). It defines the quorum, `NOSPACE`, corruption, snapshot, and destructive-recovery gates that the generic checks below do not cover.
+
 First identify replica count, placement, PVC state, and whether the incident involves Alluxio membership/mount metadata, Coordinator job state, or FDB-backed write cache.
 
 ~~~bash

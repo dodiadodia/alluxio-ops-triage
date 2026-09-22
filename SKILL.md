@@ -52,6 +52,7 @@ Ask only for missing inputs that materially change the investigation. If the use
 - For a live Kubernetes incident, read [references/live-kubernetes.md](references/live-kubernetes.md).
 - For a Diagnostic Snapshot, collectinfo archive, or extracted bundle, read [references/offline-bundle.md](references/offline-bundle.md).
 - For a specific symptom or component, read [references/symptom-runbooks.md](references/symptom-runbooks.md).
+- For etcd member availability, quorum, corruption, `NOSPACE`, backend growth, compaction, defragmentation, snapshot, or recovery, read [references/etcd-operations.md](references/etcd-operations.md).
 - For performance, capacity, cache, or metric interpretation, also read [references/observability.md](references/observability.md).
 - For the final diagnosis or escalation package, read [references/report-template.md](references/report-template.md).
 

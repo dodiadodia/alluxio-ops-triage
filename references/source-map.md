@@ -14,6 +14,8 @@ Record the documentation URL and access date in a Support report when it affects
 
 This skill was initially reconciled against the unversioned documentation on 2026-09-15. That date is provenance, not a freshness guarantee; re-check the site for each version-sensitive incident.
 
+The etcd recovery material was reconciled on 2026-09-22 against the Support document `ETCD recovery SOP`, the current Enterprise checkout, and the upstream etcd v3.5 operations documentation. The Support document contains duplicated English/Chinese sections and several missing formula operands in its exported text; do not reconstruct those numbers from context.
+
 ## Official documentation entry points
 
 - Product overview: https://documentation.alluxio.io/ee-ai-en
@@ -24,6 +26,9 @@ This skill was initially reconciled against the unversioned documentation on 202
 - Coordinator and job scheduling: https://documentation.alluxio.io/ee-ai-en/administration/managing-coordinators
 - Kubernetes installation and Operator resources: https://documentation.alluxio.io/ee-ai-en/start/installing-on-kubernetes
 - Docker and bare-metal deployment: https://documentation.alluxio.io/ee-ai-en/start/installing-on-docker
+- etcd v3.5 maintenance, quota, compaction, defragmentation, and snapshots: https://etcd.io/docs/v3.5/op-guide/maintenance/
+- etcd v3.5 metrics: https://etcd.io/docs/v3.5/metrics/
+- etcd data-corruption recovery: use the page matching the deployed etcd version, for example https://etcd.io/docs/v3.6/op-guide/data_corruption/
 
 The documentation site exposes versioned branches under paths such as /ee-ai-en/ai-3.7/. Search for the detected version rather than assuming the current page applies.
 
@@ -59,9 +64,20 @@ The supplied Alluxio 标准操作手册（SOP）大纲.docx contributes these op
 - etcd node, capacity, Coordinator, Worker, and FUSE recovery;
 - pre-change checks, rollback, evidence retention, incident timelines, Support escalation, and recovery verification.
 
+The Support Google Doc `ETCD recovery SOP` contributes:
+
+- member-unavailable and backend-space-exhaustion scenarios;
+- Alluxio job-state retention as an etcd-capacity input;
+- compaction, defragmentation, alarm clearing, and recovery verification;
+- Kubernetes data-volume rebuild examples and an open request for a bare-metal equivalent.
+
 Known reconciliation points:
 
 - Current documentation may use a doctor-controller while the custom resource kind remains CollectInfo. Verify both from the installed cluster.
 - Worker cache survival depends on page-store and Worker identity persistence; do not assume every restart loses or preserves cache.
 - A recursive ls against a FUSE mount is unsafe during degradation even if an older checklist suggests listing a test directory.
 - Resource thresholds and recommended sizes require workload baseline and release-specific validation.
+- A Non-Ready etcd pod is not proof of data corruption; preserve evidence and distinguish quorum, network/TLS, disk, quota, configuration, and process causes.
+- With periodic auto-compaction, a bare integer is interpreted according to the deployed etcd version and mode; it does not universally mean “that many operations.” Prefer an explicit duration such as `1h` only after validating workload and watcher requirements.
+- A copied live data directory is not automatically equivalent to a verified portable snapshot. Prefer the deployed version's supported snapshot workflow and verify snapshot status before relying on it.
+- Whole-cluster scale-down, deleting all etcd PVCs, or clearing data directories creates an outage and can lose Alluxio state. It is a last-resort, version-matched recovery action rather than routine first response.
