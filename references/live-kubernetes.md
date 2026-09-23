@@ -216,13 +216,16 @@ Do not perform these operations merely because they appear in a runbook:
 | Action | Primary risk | Required preparation |
 |---|---|---|
 | Delete/restart FUSE, Worker, or Coordinator pod | Interruption, cache miss surge, lost Last State evidence | Evidence capture, workload impact, recovery owner, rollback or reschedule path |
-| Edit ConfigMap or AlluxioCluster | Rolling restart or incompatible configuration | Export current object, validate schema, maintenance window, restore plan |
+| Change any Alluxio property through `*.properties`, ConfigMap, AlluxioCluster, Helm, environment, JVM `-D`, or startup arguments | Rolling restart, incompatible or unsafe configuration, wider-than-expected scope | Exact current/effective source and proposed diff, version evidence, impact, rollout, validation, rollback, and explicit manual approval of those exact keys/values by an Alluxio expert |
+| Edit non-property ConfigMap or AlluxioCluster fields | Rolling restart or incompatible configuration | Export current object, validate schema, maintenance window, restore plan |
 | Stop/rerun/load/free/rebalance a job | Incomplete coverage, UFS load, cache deletion, data-path impact | Exact target, job state, bandwidth/capacity check, validation |
 | Etcd compact/defrag | Temporary unavailability and quorum risk | Snapshot, endpoint health, one member at a time, capacity plan |
 | Delete etcd PVC or host data | Loss of membership, mounts, quotas, and job metadata | Last-resort approval, tested backup and restore, full configuration inventory |
 | FUSE force unmount | Application I/O failure | Exact mount identity, affected workloads stopped or coordinated, remount verification |
 
 After an authorized recovery, verify component readiness, stable restart counts, Worker membership, exact known-path access, relevant job state, error rate, performance versus baseline, data consistency, and an agreed observation window.
+
+Properties approval is a separate gate from general mutation approval. Even when the user originally requested a configuration change, present the exact final diff and request confirmation that an Alluxio expert reviewed and approved it immediately before applying it. If the effective value or source cannot be proven, stop at a proposed change rather than writing.
 
 ## 10. Docker or bare-metal notes
 

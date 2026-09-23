@@ -86,6 +86,8 @@ Customer impact determines severity. A severe-looking internal error with no imp
 |---|---|---|---|---|
 | | | | | |
 
+For every proposed or executed Alluxio properties change, record the property key, current effective value and source, proposed value, affected scope, version evidence, restart/rollout behavior, and the explicit approval status of an Alluxio expert. Mark it `Pending expert approval` until the user confirms that an Alluxio expert approved those exact keys and values.
+
 ### Durable remediation
 
 | Action | Owner | Target date | Validation |
